@@ -51,10 +51,18 @@ class Price extends AbstractModifier
         if (!$this->locator->getProduct()->getId() && $this->dataPersistor->get('catalog_product')) {
             return $this->resolvePersistentData($data);
         }
+        // s.s. 2021-06-09
+        // $productId = $this->locator->getProduct()->getId();
+        // $productPrice =  $this->locator->getProduct()->getPrice();
+        // $data[$productId][self::DATA_SOURCE_DEFAULT]['price'] = $this->formatPrice($productPrice);
+        // return $data;
         $productId = $this->locator->getProduct()->getId();
         $productPrice =  $this->locator->getProduct()->getPrice();
+        $productSpecialPrice =  $this->locator->getProduct()->getSpecialPrice();
         $data[$productId][self::DATA_SOURCE_DEFAULT]['price'] = $this->formatPrice($productPrice);
+        $data[$productId][self::DATA_SOURCE_DEFAULT]['special_price'] = $this->formatPrice($productSpecialPrice);
         return $data;
+
     }
 
     /**
